@@ -16,7 +16,7 @@ public class LMC_GrabColorChange : MonoBehaviour
 	void Start () 
 	{
 
-		lmcController = new Controller();
+		//lmcController = new Controller();
 		if (lmcController == null)
 			Debug.LogWarning("Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
 

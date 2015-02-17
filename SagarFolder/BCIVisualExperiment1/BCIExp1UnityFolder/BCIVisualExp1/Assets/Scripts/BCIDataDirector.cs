@@ -6,37 +6,38 @@ public class BCIDataDirector : MonoBehaviour
 {
 
 	BCIStreamingDataEmulator streamingDataEmulator;
+	OSCHandler streamingDataOSC;
 	public float rawDataScaler = 1.0f;
 	public float overallColorScaler = 1.0f;
 
+	#region wtf
 	public float[] currentDataArary_Raw;
+	GameObject bciAudio;
+	#endregion
 	public float[] currentDataArray;
 
-	public bool isLiveData = false;
 
 	void Awake()
 	{
+
 		streamingDataEmulator = FindObjectOfType<BCIStreamingDataEmulator>();
+		streamingDataOSC =  OSCHandler.Instance;
+		
 		// TODO: maybe this should go into OnEnable() ?
-		currentDataArary_Raw = streamingDataEmulator.GetDataPointsArray();
+
+		currentDataArary_Raw = streamingDataOSC.getOscArr();
 		currentDataArray = new float[currentDataArary_Raw.Length];
+		Debug.Log ("Length of Array" + currentDataArary_Raw.Length);
 	}
 
 
 	void Update()
 	{
-		if(isLiveData == true)
-		{
-
-		}
-		else
-		{
-			currentDataArary_Raw = streamingDataEmulator.GetDataPointsArray();
-		}
-
+		//currentDataArary_Raw = streamingDataEmulator.GetDataPointsArray();
+		currentDataArary_Raw = streamingDataOSC.getOscArr();
 		//for(int i = 0; i < currentDataArary_Raw.Length ; i++)
 		//	currentDataArray[i] = rawDataScaler * currentDataArary_Raw[i];
-
+		streamingDataOSC.IsHubertNull();
 		for(int i = 0; i< currentDataArray.Length; i += 2)
 		{
 			currentDataArray[i] = (currentDataArary_Raw[i/2] + currentDataArary_Raw[i/2 +1])/2.0f;

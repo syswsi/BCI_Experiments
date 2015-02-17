@@ -34,7 +34,7 @@ public class LMC_FingertipsStitch : MonoBehaviour
 		//audioDirector = GameObject.FindGameObjectWithTag("AudioDirector").GetComponent<AudioDirectorScript>();
 		bciDataDirector = FindObjectOfType<BCIDataDirector>();
 
-		lmcController = new Controller();
+		//lmcController = new Controller();
 		if (lmcController == null)
 			Debug.LogWarning("Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
 

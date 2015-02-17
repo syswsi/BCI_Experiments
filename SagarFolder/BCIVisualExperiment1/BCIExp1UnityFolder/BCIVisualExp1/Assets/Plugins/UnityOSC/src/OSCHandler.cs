@@ -18,9 +18,11 @@
 // 	  IN THE SOFTWARE.
 //
 //	  Inspired by http://www.unifycommunity.com/wiki/index.php?title=AManagerClass
+// muse-io --osc osc.udp://localhost:5001
 
 using System;
 using System.Net;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -84,21 +86,37 @@ public class OSCHandler : MonoBehaviour
 	
 	private const int _loglength = 25;
 	#endregion
-	
+
+	#region TestVariables
+	float datapointtest=0;
+	#endregion
+
+	#region oscpacket
+
+	//private Queue<List<object>> fftqueue= null;
+    Queue fftqueue= new Queue();
+	float[] fftarr = new float[128];
+
+
+	#endregion
 	/// <summary>
 	/// Initializes the OSC Handler.
 	/// Here you can create the OSC servers and clientes.
 	/// </summary>
+
+	void Start()
+	{
+		Init ();
+	}
+
 	public void Init()
 	{
-        //Initialize OSC clients (transmitters)
-        //Example:		
-        //CreateClient("SuperCollider", IPAddress.Parse("127.0.0.1"), 5555);
+		OSCHandler.Instance.CreateServer("Muse", 5001);
+		for(int i=0;i<128;i++)
+		{
+			fftarr[i]=0;
+		}
 
-        //Initialize OSC servers (listeners)
-        //Example:
-
-        CreateServer("Muse", 5000);
 	}
 	
 	#region Properties
@@ -198,6 +216,20 @@ public class OSCHandler : MonoBehaviour
 
     void OnPacketReceived(OSCServer server, OSCPacket packet)
     {
+
+		if(packet.Address.Equals("/muse/elements/raw_fft0"))
+		{
+			datapointtest= (float)packet.Data[0];
+			Debug.Log("fft0 packets received "+ (float)packet.Data[0] );
+			//fftqueue.Enqueue(packet.Data);
+			for(int i=0;i<128;i++)
+			{
+				fftarr[i]=(float)packet.Data[i+1]/5+2;
+
+			}
+
+
+		}
     }
 	
 	/// <summary>
@@ -356,6 +388,18 @@ public class OSCHandler : MonoBehaviour
 		
 		return milliseconds.ToString();
 	}
+
+	public float[] getOscArr()
+		{
+		return fftarr;
+		}
+
+	public void IsHubertNull()
+	{
+		Debug.Log("Is ffto = 0? .... " +datapointtest);
+	}
+
+
 			
 	#endregion
 }	

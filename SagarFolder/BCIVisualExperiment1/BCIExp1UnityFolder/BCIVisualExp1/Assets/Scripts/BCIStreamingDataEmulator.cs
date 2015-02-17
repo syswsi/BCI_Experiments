@@ -15,9 +15,12 @@ public class BCIStreamingDataEmulator : MonoBehaviour
 
 	void Awake()
 	{
+		//Takes the information  and creates the array of values
 		string[] linesArray = csvDataFile.text.Split('\n');
 		// removed last null line (not checking, just blindling removing last line for now
+		//Counts the number of lines in the array
 		linesArray = linesArray.Take(linesArray.Length - 1).ToArray();
+		//tells us the length of the number of data points per line
 		int dataPointsPerLine = linesArray[0].Split(',').Length;
 		
 		Debug.Log("data points per line: " + dataPointsPerLine);
@@ -39,7 +42,6 @@ public class BCIStreamingDataEmulator : MonoBehaviour
 
 	void Update()
 	{
-
 		if( timeCounter > dataRefreshInterval )
 		{
 			timeCounter -= dataRefreshInterval;

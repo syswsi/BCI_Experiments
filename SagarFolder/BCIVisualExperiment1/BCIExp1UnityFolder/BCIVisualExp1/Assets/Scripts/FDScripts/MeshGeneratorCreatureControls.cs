@@ -36,7 +36,7 @@ public class MeshGeneratorCreatureControls : MonoBehaviour
 	{
 		pva = GetComponent<PVA>();
 
-		lmcController = new Controller();
+		//lmcController = new Controller();
 
 		if (lmcController == null) 
 		{

@@ -27,7 +27,7 @@ public class LeapRecorder {
   protected Frame current_frame_ = new Frame();
   
   public LeapRecorder() {
-    Reset();
+    //Reset();
   }
 
   public void Stop() {

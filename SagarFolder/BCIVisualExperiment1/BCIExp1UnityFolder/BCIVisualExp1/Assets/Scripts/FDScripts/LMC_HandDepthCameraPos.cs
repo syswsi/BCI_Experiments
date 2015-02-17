@@ -12,8 +12,8 @@ public class LMC_HandDepthCameraPos : MonoBehaviour
 
 	void Start () 
 	{
-		lmcController = new Controller();
-		if (lmcController == null)
+		//lmcController = new Controller();
+		//if (lmcController == null)
 			Debug.LogWarning("Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
 
 		cameraHolderTagetMovement = GetComponent<CameraHolderTargetMovement>();
